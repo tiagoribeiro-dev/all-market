@@ -40,6 +40,7 @@ const CONTENT: Record<'en' | 'pt', { title: string; intro: string; sections: Sec
         body: [
           `To provide the service (contract): create your account, publish requests and proposals, let a client and a professional talk, and send emails such as password recovery and notifications of new proposals and messages.`,
           `To keep the platform secure and prevent fraud and abuse (legitimate interest), including the security counters and the review of Pro applications.`,
+          `Waiting list (consent): if Needer is not open in your district yet and you leave your email, we use it only to tell you when we open there, then delete it. You can ask us to remove it at any time.`,
           `To comply with legal obligations, for example answering authorities or handling reports of illegal content.`,
           `We do not sell your data, we do not use it for advertising, and we have no analytics or tracking tools on the site.`,
         ],
@@ -121,6 +122,7 @@ const CONTENT: Record<'en' | 'pt', { title: string; intro: string; sections: Sec
         body: [
           `Para prestar o serviço (contrato): criar a tua conta, publicar pedidos e propostas, permitir que cliente e profissional conversem, e enviar emails como a recuperação da palavra-passe e os avisos de novas propostas e mensagens.`,
           `Para manter a plataforma segura e prevenir fraudes e abusos (interesse legítimo), incluindo os contadores de segurança e a análise das candidaturas a Pro.`,
+          `Lista de espera (consentimento): se o Needer ainda não funciona no teu distrito e deixares o teu email, usamo-lo só para te avisar quando abrirmos aí, e depois apagamo-lo. Podes pedir para o retirarmos a qualquer momento.`,
           `Para cumprir obrigações legais, por exemplo responder a autoridades ou tratar denúncias de conteúdo ilegal.`,
           `Não vendemos os teus dados, não os usamos para publicidade e não temos ferramentas de análise ou rastreamento no site.`,
         ],
