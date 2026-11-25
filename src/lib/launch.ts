@@ -7,11 +7,13 @@ import { districts, type District } from '@/lib/districts';
 // up everywhere (request form, filters, homepage, server validation). Use 'all' to
 // open everything. Nothing is deleted when something is left out — it is only hidden,
 // and existing requests keep working.
-export const LAUNCH_DISTRICTS: string[] | 'all' = ['porto'];
-export const LAUNCH_CATEGORIES: string[] | 'all' = ['home-repairs', 'renovation', 'cleaning', 'moving', 'garden'];
+type Scope = string[] | 'all';
+export const LAUNCH_DISTRICTS: Scope = ['porto'] as Scope;
+export const LAUNCH_CATEGORIES: Scope = ['home-repairs', 'renovation', 'cleaning', 'moving', 'garden'] as Scope;
 
-export const isLaunchDistrict = (key: string) => LAUNCH_DISTRICTS === 'all' || LAUNCH_DISTRICTS.includes(key);
-export const isLaunchCategory = (key: string) => LAUNCH_CATEGORIES === 'all' || LAUNCH_CATEGORIES.includes(key);
+const inScope = (scope: Scope, key: string) => scope === 'all' || scope.includes(key);
+export const isLaunchDistrict = (key: string) => inScope(LAUNCH_DISTRICTS, key);
+export const isLaunchCategory = (key: string) => inScope(LAUNCH_CATEGORIES, key);
 
 export const launchCategories: Category[] = categories.filter((c) => isLaunchCategory(c.key));
 export const launchDistricts: District[] = districts.filter((d) => isLaunchDistrict(d.key));
