@@ -10,6 +10,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { categories, isValidSubcategory } from '@/lib/categories';
+import { launchCategories } from '@/lib/launch';
 import { districts, getDistrict } from '@/lib/districts';
 
 // Preserves in-progress form data across the login redirect (see handleSubmit) —
@@ -27,7 +28,8 @@ export default function NewRequestPage() {
   // Pre-fill: the concierge (src/lib/categorize.ts) and the category grid link here
   // with query params. Anything unrecognised is dropped so the client picks it.
   const param = (k: string) => searchParams.get(k) || '';
-  const initialCategory = categories.find((c) => c.key === param('category'))?.key || '';
+  // Only open categories (src/lib/launch.ts): a concierge guess outside them is dropped.
+  const initialCategory = launchCategories.find((c) => c.key === param('category'))?.key || '';
   const initialSubcategory = isValidSubcategory(initialCategory, param('subcategory')) ? param('subcategory') : '';
   const initialText = param('q').slice(0, 2000);
   const initialBudget = Number(param('budget')) > 0 ? String(Math.round(Number(param('budget')))) : '';
@@ -227,7 +229,7 @@ export default function NewRequestPage() {
                 gap: '10px',
               }}
             >
-              {categories.map((cat) => {
+              {launchCategories.map((cat) => {
                 const isEmergency = cat.key === 'home-repairs';
                 return (
                   <button

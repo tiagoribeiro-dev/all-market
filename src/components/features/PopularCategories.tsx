@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { categories } from '@/lib/categories';
+import { launchCategories as categories } from '@/lib/launch';
 import { categoryIcon } from '@/lib/categoryIcons';
 
 const CARD_WIDTH = 220;

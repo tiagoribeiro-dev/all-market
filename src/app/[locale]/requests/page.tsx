@@ -9,6 +9,7 @@ import { Search, MapPin, Clock, Zap, Star } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { categories } from '@/lib/categories';
+import { launchCategories } from '@/lib/launch';
 import { categoryIcon } from '@/lib/categoryIcons';
 
 // Category → visual tile (icon + tint) — stands in for a photo until listings support image uploads
@@ -203,7 +204,7 @@ export default function BrowseRequestsPage() {
             }}
           >
             <option value="">{locale === 'pt' ? 'Todas as categorias' : 'All categories'}</option>
-            {categories.map((cat) => (
+            {launchCategories.map((cat) => (
               <option key={cat.key} value={cat.key}>
                 {locale === 'pt' ? cat.labelPT : cat.labelEN}
               </option>

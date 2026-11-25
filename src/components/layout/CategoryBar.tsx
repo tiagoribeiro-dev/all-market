@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { Flame } from 'lucide-react';
-import { categories } from '@/lib/categories';
+import { launchCategories as categories } from '@/lib/launch';
 import { useState, useEffect } from 'react';
 
 export default function CategoryBar() {
