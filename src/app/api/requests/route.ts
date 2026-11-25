@@ -7,6 +7,7 @@ import Proposal from '@/lib/models/Proposal';
 import { z } from 'zod';
 import { getCategoryType, isValidSubcategory } from '@/lib/categories';
 import { DISTRICT_KEYS, getDistrict } from '@/lib/districts';
+import { isLaunchCategory, isLaunchDistrict } from '@/lib/launch';
 import { notifyMatchingPros } from '@/lib/notifications';
 import { euros, parseBody, text, uploadedImageUrl } from '@/lib/validation';
 import { HOUR, rateLimit, tooManyRequests } from '@/lib/rateLimit';
@@ -153,6 +154,15 @@ const createRequestSchema = z
     .refine((b) => isValidSubcategory(b.category, b.subcategory), {
         message: 'Unknown category/subcategory',
         path: ['subcategory'],
+    })
+    // Launch mode (src/lib/launch.ts): the form only offers these, this stops direct API calls.
+    .refine((b) => isLaunchDistrict(b.district), {
+        message: 'Needer is not open in this district yet',
+        path: ['district'],
+    })
+    .refine((b) => isLaunchCategory(b.category), {
+        message: 'This category is not open yet',
+        path: ['category'],
     });
 
 export async function POST(request: Request) {
