@@ -10,7 +10,8 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { categories, isValidSubcategory } from '@/lib/categories';
-import { launchCategories } from '@/lib/launch';
+import { isLaunchDistrict, launchCategories } from '@/lib/launch';
+import WaitlistNotice from '@/components/features/WaitlistNotice';
 import { districts, getDistrict } from '@/lib/districts';
 
 // Preserves in-progress form data across the login redirect (see handleSubmit) —
@@ -567,11 +568,28 @@ export default function NewRequestPage() {
                 }}
               >
                 <option value="">{locale === 'pt' ? 'Escolhe o distrito…' : 'Choose a district…'}</option>
-                {districts.map((d) => (
-                  <option key={d.key} value={d.key}>{locale === 'pt' ? d.labelPT : d.labelEN}</option>
-                ))}
+                {/* Open districts first (src/lib/launch.ts); the rest lead to the waitlist. */}
+                <optgroup label={locale === 'pt' ? 'Disponível' : 'Available'}>
+                  {districts.filter((d) => isLaunchDistrict(d.key)).map((d) => (
+                    <option key={d.key} value={d.key}>{locale === 'pt' ? d.labelPT : d.labelEN}</option>
+                  ))}
+                </optgroup>
+                <optgroup label={locale === 'pt' ? 'Brevemente' : 'Coming soon'}>
+                  {districts.filter((d) => !isLaunchDistrict(d.key)).map((d) => (
+                    <option key={d.key} value={d.key}>{locale === 'pt' ? d.labelPT : d.labelEN}</option>
+                  ))}
+                </optgroup>
               </select>
             </div>
+
+            {form.district && !isLaunchDistrict(form.district) && (
+              <WaitlistNotice
+                district={form.district}
+                category={form.category}
+                pt={locale === 'pt'}
+                defaultEmail={session?.user?.email ?? ''}
+              />
+            )}
 
             <Input
               label={locale === 'pt' ? 'Localidade (opcional)' : 'Town (optional)'}
@@ -588,7 +606,7 @@ export default function NewRequestPage() {
               </Button>
               <Button
                 onClick={() => setStep(4)}
-                disabled={!form.fixedPrice || parseFloat(form.fixedPrice) <= 0 || !form.district}
+                disabled={!form.fixedPrice || parseFloat(form.fixedPrice) <= 0 || !form.district || !isLaunchDistrict(form.district)}
                 icon={<ArrowRight size={16} />}
               >
                 {tc('next')}
